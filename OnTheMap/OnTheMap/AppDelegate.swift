@@ -2,11 +2,13 @@
 //  AppDelegate.swift
 //  OnTheMap
 //
-//  Created by Reem Saloom on 1/20/19.
+//  Created by Reem Saloom on 2/10/19.
 //  Copyright © 2019 Reem AlSalloom. All rights reserved.
 //
 
 import UIKit
+import UIKit
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
