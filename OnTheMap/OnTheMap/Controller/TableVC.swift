@@ -13,6 +13,7 @@ import UIKit
 class TableVC: Base {
     
     
+  
     @IBOutlet weak var tableView: UITableView!
     
     override var locationData: LocationData? {
@@ -26,19 +27,21 @@ class TableVC: Base {
             tableView.reloadData()
         }
     }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-    
-    
 }
+
 
 extension TableVC: UITableViewDelegate, UITableViewDataSource  {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+   
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
@@ -46,11 +49,21 @@ extension TableVC: UITableViewDelegate, UITableViewDataSource  {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationCell
+       // let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationCell
         
-        cell.configWith(locations[indexPath.row])
+      //  cell.configWith(locations[indexPath.row])
         
+       // return cell
+        
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationCell else {
+            return UITableViewCell()
+        }
+        let item = locations[indexPath.row]
+        cell.labelName.text = (item.firstName ?? "") + " " + (item.lastName ?? "")
+        cell.labelUrl.text = item.mapString
         return cell
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

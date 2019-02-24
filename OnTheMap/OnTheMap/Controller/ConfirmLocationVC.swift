@@ -6,7 +6,7 @@
 //  Copyright © 2019 Reem AlSalloom. All rights reserved.
 //
 
-import Foundation
+
 import UIKit
 import MapKit
 
@@ -20,8 +20,24 @@ class ConfirmLocationVC : UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        setupMap()
+      //  setupMap
+        
+        
+        guard let location = location else { return }
+        
+        let lat = CLLocationDegrees(location.latitude)
+        let long = CLLocationDegrees(location.longitude)
+        
+        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        
+        let annotation = MKPointAnnotation()
+        
+        annotation.coordinate = coordinate
+        annotation.title = location.mapString
+        mapView.addAnnotation(annotation)
+        
+        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        mapView.setRegion(region, animated: true)
     }
     
     @IBAction func finishTapped(_ sender: UIButton) {
@@ -37,26 +53,23 @@ class ConfirmLocationVC : UIViewController
         
     }
     
-    private func setupMap() {
-        guard let location = location else { return }
-        
-        let lat = CLLocationDegrees(location.latitude)
-        let long = CLLocationDegrees(location.longitude)
-        
-        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        
-        // TODO: Create a new MKPointAnnotation
-        let annotation = MKPointAnnotation()
-        // TODO: Set annotation's `coordinate` and `title` properties to the correct coordinate and `location.mapString` respectively
-        annotation.coordinate = coordinate
-        annotation.title = location.mapString
-        // TODO: Add annotation to the `mapView`
-        mapView.addAnnotation(annotation)
-        
-        // Setting current mapView's region to be centered at the pin's coordinate
-        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        mapView.setRegion(region, animated: true)
-    }
+//    private func setupMap() {
+//        guard let location = location else { return }
+//        
+//        let lat = CLLocationDegrees(location.latitude)
+//        let long = CLLocationDegrees(location.longitude)
+//        
+//        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+//        
+//        let annotation = MKPointAnnotation()
+//        
+//        annotation.coordinate = coordinate
+//        annotation.title = location.mapString
+//        mapView.addAnnotation(annotation)
+//        
+//        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//        mapView.setRegion(region, animated: true)
+//    }
     
 }
 

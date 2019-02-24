@@ -57,21 +57,27 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFh-ti-OaY">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFh-ti-OaY">
                                             <rect key="frame" x="36" y="12" width="43" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="url" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DU5-ys-IVw">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="url" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DU5-ys-IVw">
                                             <rect key="frame" x="128" y="12" width="20" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cFh-ti-OaY" firstAttribute="leading" secondItem="qOU-jV-PyG" secondAttribute="leadingMargin" constant="20" id="4gm-Rr-mnn"/>
+                                        <constraint firstItem="DU5-ys-IVw" firstAttribute="leading" secondItem="cFh-ti-OaY" secondAttribute="trailing" constant="49" id="Pnq-pJ-hMj"/>
+                                        <constraint firstItem="cFh-ti-OaY" firstAttribute="centerY" secondItem="qOU-jV-PyG" secondAttribute="centerY" id="Sjs-td-uew"/>
+                                        <constraint firstItem="cFh-ti-OaY" firstAttribute="baseline" secondItem="DU5-ys-IVw" secondAttribute="baseline" id="UUP-Xx-Bwn"/>
+                                        <constraint firstItem="cFh-ti-OaY" firstAttribute="firstBaseline" secondItem="DU5-ys-IVw" secondAttribute="firstBaseline" id="irG-SW-JFx"/>
+                                        <constraint firstItem="cFh-ti-OaY" firstAttribute="bottom" secondItem="qOU-jV-PyG" secondAttribute="bottomMargin" id="zQq-YZ-iPb"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="labelName" destination="cFh-ti-OaY" id="jwQ-i5-UHi"/>
@@ -86,7 +92,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="daz-Ef-LfV"/>
                     <connections>
-                        <outlet property="tableView" destination="fSu-ct-7aR" id="7VY-6a-cJK"/>
+                        <outlet property="tableView" destination="fSu-ct-7aR" id="17r-22-xAg"/>
+                        <outlet property="tableview" destination="fSu-ct-7aR" id="oah-9U-HCa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TpZ-AO-LAc" userLabel="First Responder" sceneMemberID="firstResponder"/>

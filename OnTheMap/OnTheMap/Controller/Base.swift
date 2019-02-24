@@ -9,7 +9,7 @@
 import UIKit
 
 class Base: UIViewController {
-
+    
     
     
     var locationData: LocationData?
@@ -31,17 +31,24 @@ class Base: UIViewController {
         navigationItem.leftBarButtonItem = logoutBtn
     }
     
+    
+    
     @objc private  func addLocation(_ sender: Any){
+        
         let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
         
         present(navController, animated:  true, completion: nil)
     }
+    
+    
     @objc private func refreshLocation(_ sender: Any){
         loadStudentLocations()
     }
+    
+    
     @objc private func logout(_ sender: Any) {
-        let alertController = UIAlertController(title: "Logout", message: "", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "", style: .default, handler: {(_) in
+        let alertController = UIAlertController(title: "Logout", message: "log out?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Logout", style: .default, handler: {(_) in
             API.deleteSession { (error) in
                 guard error == nil else {
                     self.showAlert(title: "Error", message: error!)
@@ -54,7 +61,8 @@ class Base: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-
+    
+    
     private func loadStudentLocations() {
         API.getStudentsLocations { (data) in
             guard let data = data else {

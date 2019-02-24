@@ -43,7 +43,7 @@ class AddLocationVC: UIViewController {
             return
         }
         
-        let studentLocation = StudentLocation.init(createdAt: "",
+        var studentLocation = StudentLocation.init(createdAt: "",
                                                    firstName: nil,
                                                    lastName: nil,
                                                    latitude: 0,
@@ -53,20 +53,20 @@ class AddLocationVC: UIViewController {
                                                    objectId: "",
                                                    uniqueKey: "",
                                                    updatedAt: "")
-        pass(studentLocation)
-    }
-    private func pass(_ location: StudentLocation){
-    let geoDecoder = CLGeocoder()
+  
+        let geoDecoder = CLGeocoder()
         let ai = self.startAnActivityIndicator()
-        geoDecoder.geocodeAddressString(location.mapString) { (placeMarks, _) in
+        geoDecoder.geocodeAddressString(studentLocation.mapString) { (placeMarks, _) in
             ai.stopAnimating()
             guard let marks = placeMarks else {
-                self.showAlert(title: "Error", message: "could not geo code your location")
+                self.showAlert(title: "Error", message: "could not find location")
                 return
             }
-            var studentLocation = location
-            studentLocation.longitude = Float(((marks.first!.location?.coordinate.longitude)!))
-            studentLocation.latitude = Float(((marks.first!.location?.coordinate.latitude)!))
+            studentLocation.longitude = Float ((marks[0].location?.coordinate.longitude)!)
+            //Float(((marks.first!.location?.coordinate.longitude)!))
+            
+            studentLocation.latitude = Float(((marks[0].location?.coordinate.latitude)!))
+            
             self.performSegue(withIdentifier: "mapSegue", sender: studentLocation)
 
         }
@@ -74,8 +74,9 @@ class AddLocationVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "" , let vc = segue.destination as? ConfirmLocationVC {
-            vc.location = (sender as! StudentLocation)
+       //mapSegue
+        if let vc = segue.destination as? ConfirmLocationVC, let location = sender as? StudentLocation {
+            vc.location = location
         }
     }
     
