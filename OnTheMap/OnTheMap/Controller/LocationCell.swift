@@ -13,12 +13,16 @@ import UIKit
 class LocationCell: UITableViewCell {
     
     
+   // @IBOutlet weak var labelName: UILabel!
+   // @IBOutlet weak var labelUrl: UILabel!
+    
     @IBOutlet weak var labelName: UILabel!
+    
     @IBOutlet weak var labelUrl: UILabel!
     
     func configWith(_ info: StudentLocation) {
         labelName.text = info.firstName! + " " + info.lastName!
-        labelUrl.text = info.mediaURL
+        //labelUrl.text = info.mediaURL
     }
     
 }

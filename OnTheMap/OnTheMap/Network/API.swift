@@ -13,6 +13,7 @@ class API {
     private  static var sessionID: String?
     private  static var errorMessage: String?
     
+    private static var currentUser: StudentInformation?
     
     static func login(_ email : String!, _ password : String!, completion: @escaping (String?)->()) {
         guard let url = URL(string: Constants.SESSION) else {
@@ -44,8 +45,11 @@ class API {
                         let sessionDictornary = dictionary["session"] as? [String: Any],
                         let accountDictionary = dictionary["account"] as? [String: Any] {
                         
+//print("value of accountDictionary[account]:    \(accountDictionary["key"])")
+                       
                         self.sessionID = sessionDictornary["id"] as? String
-                        self.accountID = accountDictionary["account"] as? String
+                        
+                        self.accountID = accountDictionary["key"] as? String
                     } else {
                         errorMessage = "Could not parse data"
                     }
@@ -103,10 +107,11 @@ class API {
     
     static func getUserInformation(completion: @escaping (String?, String?) -> Void)
     {
-        guard let UserID = self.accountID, let url = URL(string: "\(Constants.PUBLIC_USER)/\(UserID)") else {
+        guard let UserID = self.accountID, let url = URL(string: "\(Constants.PUBLIC_USER)\(UserID)") else {
             completion(nil, nil)
             return
         }
+        print("url: \(Constants.PUBLIC_USER)\(UserID)")
         var request = URLRequest(url: url)
         request.addValue(self.sessionID!, forHTTPHeaderField: "session_id")
         let session = URLSession.shared
@@ -118,13 +123,23 @@ class API {
                 let Range = 5..<data!.count
                 let newData = data?.subdata(in: Range)
                 if let json = try? JSONSerialization.jsonObject(with: newData!, options: [.allowFragments]),
-                    let dictionary = json as? [String: Any],
-                    let user = dictionary["user"] as? [String: Any],
-                    let guardDictionary = user["guard"] as? [String: Any] {
-                    //                    nickName = user["nickname"] as? String ?? ""
-                    firstName =  guardDictionary["first_name"] as? String ?? ""
-                    lastName = user["last_name"] as? String ?? ""
+                    let dictionary = json as? [String: Any]{
+                    firstName =  dictionary["first_name"] as? String ?? ""
+                    lastName = dictionary["last_name"] as? String ?? ""
+                    
+                    currentUser?.firstName = firstName
+                    currentUser?.lastName = lastName
+                    currentUser?.key = dictionary["key"] as! String
+                    
+                    print(dictionary)
                 }
+                
+                   // let user = dictionary["user"] as? [String: Any],
+//                    let guardDictionary = user["guard"] as? [String: Any] {
+//                    //                    nickName = user["nickname"] as? String ?? ""
+//
+//                }
+               
             }
             DispatchQueue.main.async {
                 completion(firstName, lastName)
@@ -187,7 +202,8 @@ class API {
     
     static func postLocation (_ info: StudentLocation, completion: @escaping (String?)-> Void)
     {
-        guard let accountID = accountID, let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)") else {
+      //  let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)")
+        guard let accountID = self.accountID, let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)") else {
             completion("Invalid URL")
             return
         }
@@ -196,7 +212,12 @@ class API {
         request.addValue(Constants.ParseValues.API_Key, forHTTPHeaderField: Constants.ParseKeys.API_Key)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let jsonBody = "{\"uniqueKey\": \"\(info.uniqueKey)\", \"firstName\": \"\(info.firstName)\", \"lastName\": \"\(info.lastName)\",\"mapString\": \"\(info.mapString)\", \"mediaURL\": \"\(info.mediaURL)\",\"latitude\": \(info.latitude), \"longitude\": \(info.longitude)}"
+        
+        getUserInformation { _,_ in }
+        
+        let jsonBody = "{\"uniqueKey\": \"\(self.currentUser?.key)\", \"firstName\": \"\(String(describing: self.currentUser?.firstName))\", \"lastName\": \"\(self.currentUser?.lastName)\",\"mapString\": \"\(info.mapString)\", \"mediaURL\": \"\(info.mediaURL)\",\"latitude\": \(info.latitude), \"longitude\": \(info.longitude)}"
+      
+        print("body: \(jsonBody)")
         
         request.httpBody = jsonBody.data(using: .utf8)
         let session = URLSession.shared

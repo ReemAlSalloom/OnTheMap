@@ -18,6 +18,7 @@ class MapVC: Base, MKMapViewDelegate {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
           self.mapView.delegate = self
 //        self.locationManager = CLLocationManager()
 //        self.locationManager.delegate = self
@@ -36,15 +37,15 @@ class MapVC: Base, MKMapViewDelegate {
     
     func updatePins()
     {
-       // mapView.removeAnnotation(mapView?.annotations as! MKAnnotation)
+      //  mapView.removeAnnotation(mapView.annotations)
         
-        guard let locations = locationData?.studentLocations else {return}
+        guard let locations =  self.locationData?.studentLocations else {return}
         
         var annotations: [MKPointAnnotation] = []
         
         for location in locations  {
             
-            let long = CLLocationDegrees (location.longitude)
+            let long = CLLocationDegrees (location.longitude )
             let lat = CLLocationDegrees (location.latitude )
             
             
@@ -60,8 +61,10 @@ class MapVC: Base, MKMapViewDelegate {
         }
         self.mapView.addAnnotations (annotations)
         
-    }
-    
+    }}
+
+extension MapVC {
+
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         

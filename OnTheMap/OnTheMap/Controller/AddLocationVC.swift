@@ -43,6 +43,16 @@ class AddLocationVC: UIViewController {
             return
         }
         
+//        let newLocation = Location.init(createdAt: nil,
+//                                        updatedAt: nil,
+//                                        mapString: location,
+//                                        mediaURL: link,
+//                                        firstName: User.current?.firstName,
+//                                        lastName: User.current?.lastName,
+//                                        uniqueKey: User.current?.key,
+//                                        latitude: placemarks[0].location?.coordinate.latitude,
+//                                        longitude: placemarks[0].location?.coordinate.longitude)
+//
         var studentLocation = StudentLocation.init(createdAt: "",
                                                    firstName: nil,
                                                    lastName: nil,
@@ -66,7 +76,6 @@ class AddLocationVC: UIViewController {
             //Float(((marks.first!.location?.coordinate.longitude)!))
             
             studentLocation.latitude = Float(((marks[0].location?.coordinate.latitude)!))
-            
             self.performSegue(withIdentifier: "mapSegue", sender: studentLocation)
 
         }

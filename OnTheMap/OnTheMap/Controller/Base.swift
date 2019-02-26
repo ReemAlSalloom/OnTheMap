@@ -16,9 +16,9 @@ class Base: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupUI()
         loadStudentLocations()
+        setupUI()
+        
     }
     
     func setupUI()
@@ -47,7 +47,7 @@ class Base: UIViewController {
     
     
     @objc private func logout(_ sender: Any) {
-        let alertController = UIAlertController(title: "Logout", message: "log out?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Logout", message: "are you sure you want to log out?", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Logout", style: .default, handler: {(_) in
             API.deleteSession { (error) in
                 guard error == nil else {
@@ -64,8 +64,9 @@ class Base: UIViewController {
     
     
     private func loadStudentLocations() {
-        API.getStudentsLocations { (data) in
-            guard let data = data else {
+        API.getStudentsLocations(limit: 100, skip: 1, orderBy: .createdAt) { (data) in
+         
+        guard let data = data else {
                 self.showAlert(title: "Error", message: "No internet connection found")
                 return
             }

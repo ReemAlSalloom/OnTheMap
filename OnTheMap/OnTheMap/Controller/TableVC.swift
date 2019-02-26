@@ -6,27 +6,35 @@
 //  Copyright © 2019 Reem AlSalloom. All rights reserved.
 //
 
-import Foundation
 
 import UIKit
 
-class TableVC: Base {
+class TableVC: Base  {
     
-    
-  
     @IBOutlet weak var tableView: UITableView!
+    
     
     override var locationData: LocationData? {
         didSet {
             guard let locationData = locationData else {return }
             locations = locationData.studentLocations
-        }
-    }
-    var locations: [StudentLocation] = [] {
-        didSet {
             tableView.reloadData()
         }
     }
+    var locations: [StudentLocation] = []
+    
+//    var locations: [StudentLocation] = [] {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
+    
+//    override var list: [Location]? {
+//        didSet {
+//            filteredList = list?.filter({ $0.firstName != nil && $0.firstName?.isEmpty == false})
+//            tableView.reloadData()
+//        }
+//    }
     
     
     
@@ -39,9 +47,9 @@ class TableVC: Base {
 }
 
 
-extension TableVC: UITableViewDelegate, UITableViewDataSource  {
+extension TableVC:  UITableViewDelegate, UITableViewDataSource  {
     
-   
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
@@ -49,11 +57,11 @@ extension TableVC: UITableViewDelegate, UITableViewDataSource  {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationCell
+        // let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationCell
         
-      //  cell.configWith(locations[indexPath.row])
+        //  cell.configWith(locations[indexPath.row])
         
-       // return cell
+        // return cell
         
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationCell else {
@@ -71,8 +79,8 @@ extension TableVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      //  locationData?.didSelectLocation(info: locations[indexPath.row])
-       
+        //  locationData?.didSelectLocation(info: locations[indexPath.row])
+        
         let info : StudentLocation
         info = locations[indexPath.row]
         
@@ -85,11 +93,11 @@ extension TableVC: UITableViewDelegate, UITableViewDataSource  {
         UIApplication.shared.open(url, options: [:])
         
         tableView.deselectRow(at: indexPath, animated: true)
-    
-    
-    
+        
+        
+        
         print("didselect")
-    
+        
     }
 }
 
