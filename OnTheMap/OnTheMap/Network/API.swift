@@ -215,12 +215,10 @@ class API {
         request.addValue(Constants.ParseValues.API_Key, forHTTPHeaderField: Constants.ParseKeys.API_Key)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+         request.httpMethod = "POST"
         
         
-        
-//        let jsonBody = "{\"uniqueKey\": \(self.currentUser.key!), \"firstName\": \"\(String(describing: self.currentUser.firstName!))\", \"lastName\": \"\(self.currentUser.lastName!)\",\"mapString\": \"\(info.mapString)\", \"mediaURL\": \"\(info.mediaURL)\",\"latitude\": \(info.latitude), \"longitude\": \(info.longitude)}"
-//
-//
+
         let jsonBody =  "{\"uniqueKey\": \"\(currentUser.key ?? "")\", \"firstName\": \"\(currentUser.firstName ?? "")\", \"lastName\": \"\(currentUser.lastName ?? "")\",\"mapString\": \"\(info.mapString ?? "")\", \"mediaURL\": \"\(info.mediaURL ?? "")\",\"latitude\": \(info.latitude ?? 0), \"longitude\": \(info.longitude ?? 0)}"
         
         print("body: \(jsonBody)")
