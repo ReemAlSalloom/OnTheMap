@@ -12,7 +12,7 @@ import UIKit
 class TableVC: Base  {
     
     @IBOutlet weak var tableView: UITableView!
-    
+     var locations: [StudentLocation] = []
     
     override var locationData: LocationData? {
         didSet {
@@ -22,7 +22,7 @@ class TableVC: Base  {
             tableView.reloadData()
         }
     }
-    var locations: [StudentLocation] = []
+   
     
 //    var locations: [StudentLocation] = [] {
 //        didSet {

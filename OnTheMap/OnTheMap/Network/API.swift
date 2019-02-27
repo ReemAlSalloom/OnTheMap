@@ -154,7 +154,7 @@ class API {
     
     static func getStudentsLocations(limit: Int = 100, skip: Int = 0, orderBy: SLParam = .updatedAt, completion: @escaping (LocationData?)-> Void)
     {
-        guard let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)?limit=\(limit)&skip=\(skip)&order=\(orderBy)") else {
+        guard let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)?limit=\(limit)&skip=\(skip)&order=-\(orderBy)") else {
             completion(nil)
             return
         }
@@ -204,7 +204,6 @@ class API {
     
     static func postLocation (_ info: StudentLocation, completion: @escaping (String?)-> Void)
     {
-      //  let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)")
         guard let accountID = self.accountID, let url = URL(string: "\(Constants.Udacity.STUDENT_LOCATION)") else {
             completion("Invalid URL")
             return
@@ -221,13 +220,12 @@ class API {
 
         let jsonBody =  "{\"uniqueKey\": \"\(currentUser.key ?? "")\", \"firstName\": \"\(currentUser.firstName ?? "")\", \"lastName\": \"\(currentUser.lastName ?? "")\",\"mapString\": \"\(info.mapString ?? "")\", \"mediaURL\": \"\(info.mediaURL ?? "")\",\"latitude\": \(info.latitude ?? 0), \"longitude\": \(info.longitude ?? 0)}"
         
-        print("body: \(jsonBody)")
-        
+       
         request.httpBody = jsonBody.data(using: .utf8)
         let session = URLSession.shared
         let task = session.dataTask(with: request){ data, response, error in
             
-            print("response \(response)")
+            
             
             
             

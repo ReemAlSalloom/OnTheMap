@@ -57,6 +57,8 @@ class MapVC: Base, MKMapViewDelegate {
             annotation.title = "\(first) \(last)"
             annotation.subtitle = location.mediaURL
             
+            print(annotation.title )
+            
             annotations.append (annotation)
         }
         self.mapView.addAnnotations (annotations)
@@ -89,8 +91,8 @@ extension MapVC {
         
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
-            if let url = view.annotation?.subtitle! {
-                app.open(URL(string: url)!, options: [:], completionHandler: nil)
+            if  let subtitle = view.annotation?.subtitle  ,let url = URL(string: subtitle!), app.canOpenURL(url) {
+                app.open(url, options: [:], completionHandler: nil)
             }
         }
     }

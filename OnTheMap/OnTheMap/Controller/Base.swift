@@ -64,7 +64,7 @@ class Base: UIViewController {
     
     
     private func loadStudentLocations() {
-        API.getStudentsLocations(limit: 100, skip: 1, orderBy: .createdAt) { (data) in
+        API.getStudentsLocations() { (data) in
          
         guard let data = data else {
                 self.showAlert(title: "Error", message: "No internet connection found")
