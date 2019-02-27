@@ -17,7 +17,8 @@ class TableVC: Base  {
     override var locationData: LocationData? {
         didSet {
             guard let locationData = locationData else {return }
-            locations = locationData.studentLocations
+            locations = locationData.studentLocations.filter({ $0.firstName != nil && $0.firstName?.isEmpty == false})
+            
             tableView.reloadData()
         }
     }

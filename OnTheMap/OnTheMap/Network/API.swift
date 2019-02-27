@@ -13,7 +13,7 @@ class API {
     private  static var sessionID: String?
     private  static var errorMessage: String?
     
-    private static var currentUser: StudentInformation?
+    private static var currentUser: StudentInformation = StudentInformation()
     
     static func login(_ email : String!, _ password : String!, completion: @escaping (String?)->()) {
         guard let url = URL(string: Constants.SESSION) else {
@@ -50,6 +50,8 @@ class API {
                         self.sessionID = sessionDictornary["id"] as? String
                         
                         self.accountID = accountDictionary["key"] as? String
+                        
+                        getUserInformation { _,_ in }
                     } else {
                         errorMessage = "Could not parse data"
                     }
@@ -127,11 +129,11 @@ class API {
                     firstName =  dictionary["first_name"] as? String ?? ""
                     lastName = dictionary["last_name"] as? String ?? ""
                     
-                    currentUser?.firstName = firstName
-                    currentUser?.lastName = lastName
-                    currentUser?.key = dictionary["key"] as! String
+                    currentUser.firstName = firstName
+                    currentUser.lastName = lastName
+                    currentUser.key = dictionary["key"] as! String
                     
-                    print(dictionary)
+                   // print(dictionary)
                 }
                 
                    // let user = dictionary["user"] as? [String: Any],
@@ -207,21 +209,35 @@ class API {
             completion("Invalid URL")
             return
         }
+        print(url)
         var request = URLRequest(url: url)
         request.addValue(Constants.ParseValues.ApplicationID, forHTTPHeaderField: Constants.ParseKeys.ApplicationID)
         request.addValue(Constants.ParseValues.API_Key, forHTTPHeaderField: Constants.ParseKeys.API_Key)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         
-        getUserInformation { _,_ in }
         
-        let jsonBody = "{\"uniqueKey\": \"\(self.currentUser?.key)\", \"firstName\": \"\(String(describing: self.currentUser?.firstName))\", \"lastName\": \"\(self.currentUser?.lastName)\",\"mapString\": \"\(info.mapString)\", \"mediaURL\": \"\(info.mediaURL)\",\"latitude\": \(info.latitude), \"longitude\": \(info.longitude)}"
-      
+        
+//        let jsonBody = "{\"uniqueKey\": \(self.currentUser.key!), \"firstName\": \"\(String(describing: self.currentUser.firstName!))\", \"lastName\": \"\(self.currentUser.lastName!)\",\"mapString\": \"\(info.mapString)\", \"mediaURL\": \"\(info.mediaURL)\",\"latitude\": \(info.latitude), \"longitude\": \(info.longitude)}"
+//
+//
+        let jsonBody =  "{\"uniqueKey\": \"\(currentUser.key ?? "")\", \"firstName\": \"\(currentUser.firstName ?? "")\", \"lastName\": \"\(currentUser.lastName ?? "")\",\"mapString\": \"\(info.mapString ?? "")\", \"mediaURL\": \"\(info.mediaURL ?? "")\",\"latitude\": \(info.latitude ?? 0), \"longitude\": \(info.longitude ?? 0)}"
+        
         print("body: \(jsonBody)")
         
         request.httpBody = jsonBody.data(using: .utf8)
         let session = URLSession.shared
         let task = session.dataTask(with: request){ data, response, error in
+            
+            print("response \(response)")
+            
+            
+            
+            var JSONString = String(data: data!, encoding: String.Encoding.utf8)
+                print(JSONString)
+            
+            
+            
             var errString: String?
             if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if  statusCode  >= 400 {
