@@ -66,14 +66,16 @@ class Base: UIViewController {
     private func loadStudentLocations() {
         API.getStudentsLocations() { (data) in
          
-        guard let data = data else {
-                self.showAlert(title: "Error", message: "No internet connection found")
-                return
-            }
-            guard data.studentLocations.count > 0 else {
-                self.showAlert(title: "Error", message: "No pins found")
-                return
-            }
+//            guard let data = data as! LocationData else {
+//                self.showAlert(title: "Error", message: "No internet connection found")
+//                return
+//            }
+            //StudentsLocation.shared.studentsInformation
+//            let data = data as! LocationData
+//            guard data.studentLocations.count > 0 else {
+//                self.showAlert(title: "Error", message: "No pins found")
+//                return
+//            }
             self.locationData = data
         }
     }

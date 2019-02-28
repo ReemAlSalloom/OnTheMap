@@ -12,13 +12,13 @@ import UIKit
 class TableVC: Base  {
     
     @IBOutlet weak var tableView: UITableView!
-     var locations: [StudentLocation] = []
+     var locations = LocationData.studentLocations
     
     override var locationData: LocationData? {
         didSet {
             guard let locationData = locationData else {return }
-            locations = locationData.studentLocations.filter({ $0.firstName != nil && $0.firstName?.isEmpty == false})
-            
+           locations = LocationData.studentLocations.filter({ $0.firstName != nil && $0.firstName?.isEmpty == false})
+
             tableView.reloadData()
         }
     }
@@ -53,7 +53,7 @@ extension TableVC:  UITableViewDelegate, UITableViewDataSource  {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        return LocationData.studentLocations.count
     }
     
     
@@ -68,7 +68,7 @@ extension TableVC:  UITableViewDelegate, UITableViewDataSource  {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationCell else {
             return UITableViewCell()
         }
-        let item = locations[indexPath.row]
+        let item = LocationData.studentLocations[indexPath.row]
         cell.labelName.text = (item.firstName ?? "") + " " + (item.lastName ?? "")
         cell.labelUrl.text = item.mapString
         return cell
@@ -83,7 +83,7 @@ extension TableVC:  UITableViewDelegate, UITableViewDataSource  {
         //  locationData?.didSelectLocation(info: locations[indexPath.row])
         
         let info : StudentLocation
-        info = locations[indexPath.row]
+        info = LocationData.studentLocations[indexPath.row]
         
         
         

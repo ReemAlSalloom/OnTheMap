@@ -35,12 +35,21 @@ class MapVC: Base, MKMapViewDelegate {
         }
     }
     
+//    override var locationData: LocationData? {
+//        didSet {
+//            guard let locationData = locationData else {return }
+//            LocationData.studentLocations = LocationData.studentLocations.filter({ $0.firstName != nil && $0.firstName?.isEmpty == false})
+//
+//            updatePins()
+//        }
+//    }
+    
     func updatePins()
     {
       //  mapView.removeAnnotation(mapView.annotations)
         
-        guard let locations =  self.locationData?.studentLocations else {return}
-        
+       // guard let locations =  LocationData.studentLocations? else {return}
+         let locations =  LocationData.studentLocations
         var annotations: [MKPointAnnotation] = []
         
         for location in locations  {

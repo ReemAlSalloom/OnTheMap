@@ -11,7 +11,7 @@ import Foundation
 
 
 struct LocationData: Codable {
-    var studentLocations: [StudentLocation] = []
+   static var studentLocations: [StudentLocation] = []
 
     
 }

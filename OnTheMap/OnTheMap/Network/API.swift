@@ -165,6 +165,7 @@ class API {
         let session = URLSession.shared
         let task  = session.dataTask(with: request) {data, response, error in
             var studentLocations: [StudentLocation] = []
+          //  var studentLocations: LocationData.
             if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if  statusCode < 400 {
                     if let json = try? JSONSerialization.jsonObject(with: data!, options: []),
@@ -180,7 +181,7 @@ class API {
                 }
             }
             DispatchQueue.main.async {
-                completion(LocationData(studentLocations: studentLocations))
+               try! completion(LocationData(from: LocationData.studentLocations as! Decoder ))
             }
             
             }.resume()
